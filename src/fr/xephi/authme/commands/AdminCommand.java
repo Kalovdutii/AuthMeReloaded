@@ -38,7 +38,7 @@ import fr.xephi.authme.converter.FlatToSqlite;
 import fr.xephi.authme.converter.RakamakConverter;
 import fr.xephi.authme.converter.RoyalAuthConverter;
 import fr.xephi.authme.converter.newxAuthToFlat;
-import fr.xephi.authme.converter.oldxAuthToFlat;
+//import fr.xephi.authme.converter.oldxAuthToFlat;
 import fr.xephi.authme.datasource.DataSource;
 import fr.xephi.authme.events.SpawnTeleportEvent;
 import fr.xephi.authme.security.PasswordSecurity;
@@ -324,8 +324,8 @@ public class AdminCommand implements CommandExecutor {
         } else if (args[0].equalsIgnoreCase("xauthimport")) {
         	try {
         		Class.forName("com.cypherx.xauth.xAuth");
-            	oldxAuthToFlat converter = new oldxAuthToFlat(plugin, database, sender);
-            	converter.run();
+            	//oldxAuthToFlat converter = new oldxAuthToFlat(plugin, database, sender);
+            	//converter.run();
         	} catch (ClassNotFoundException e) {
         		try {
         			Class.forName("de.luricos.bukkit.xAuth.xAuth");

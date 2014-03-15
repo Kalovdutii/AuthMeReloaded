@@ -54,6 +54,7 @@ import fr.xephi.authme.datasource.DataSource;
 import fr.xephi.authme.datasource.FileDataSource;
 import fr.xephi.authme.datasource.MySQLDataSource;
 import fr.xephi.authme.datasource.SqliteDataSource;
+import fr.xephi.authme.datasource.MongoDataSource;
 import fr.xephi.authme.listener.AuthMeBlockListener;
 import fr.xephi.authme.listener.AuthMeChestShopListener;
 import fr.xephi.authme.listener.AuthMeEntityListener;
@@ -254,6 +255,21 @@ public class AuthMe extends JavaPlugin {
                     return;
                 }
                 break;
+             case MONGO:
+            	 try {
+            		 database = new MongoDataSource();
+            	 } catch(Exception ex) {
+            		 ConsoleLogger.showError(ex.getMessage());
+            		 if(Settings.isStopEnabled) {
+            			 ConsoleLogger.showError("Can't use MONGO! Shutdown.");
+            			 server.shutdown();
+            		 }
+            		 else {
+            			 this.getServer().getPluginManager().disablePlugin(this);
+            		 }
+            		 return;
+            	 }
+            	 break;
         }
 
         if (Settings.isCachingEnabled) {
