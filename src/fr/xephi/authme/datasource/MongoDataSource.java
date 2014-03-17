@@ -1,8 +1,19 @@
 package fr.xephi.authme.datasource;
 
+/*
+ * 
+ * @author: Kalovdutii
+ * 
+ */
+
+import java.net.UnknownHostException;
 import java.util.List;
 import java.util.Arrays;
+
+import fr.xephi.authme.ConsoleLogger;
 import fr.xephi.authme.cache.auth.PlayerAuth;
+import fr.xephi.authme.settings.Settings;
+
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
@@ -14,11 +25,26 @@ import com.mongodb.DBCursor;
 import com.mongodb.ServerAddress;
 
 public class MongoDataSource implements DataSource {
+	private MongoClient mongoClient = null;
+	private DB db = null;
+	private String collectionName = null;
+	private String fieldName = null;
+	
+	public MongoDataSource() throws UnknownHostException {
+		this.mongoClient = new MongoClient("localhost");
+		this.collectionName = Settings.getMongoCollectionName;
+		this.fieldName = Settings.getMongoFieldName;
+	}
 
 	@Override
-	public boolean isAuthAvailable(String user) {
-		// TODO Auto-generated method stub
-		return false;
+	public synchronized boolean isAuthAvailable(String user) {
+		BasicDBObject query = new BasicDBObject(this.fieldName,user);
+		DBCollection coll = db.getCollection(this.collectionName);
+		DBObject player = coll.findOne(query);
+		if(player == null) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

@@ -68,7 +68,7 @@ public final class Settings extends YamlConfiguration {
             getcUnrestrictedName, getRegisteredGroup, messagesLanguage, getMySQLlastlocX, getMySQLlastlocY, getMySQLlastlocZ,
             rakamakUsers, rakamakUsersIp, getmailAccount, getmailPassword, getmailSMTP, getMySQLColumnId, getmailSenderName, 
             getMailSubject, getMailText, getMySQLlastlocWorld, defaultWorld,
-            getPhpbbPrefix, getWordPressPrefix, getMySQLColumnLogged, spawnPriority;
+            getPhpbbPrefix, getWordPressPrefix, getMySQLColumnLogged, spawnPriority, getMongoCollectionName, getMongoFieldName;
 
     public static int getWarnMessageInterval, getSessionTimeout, getRegistrationTimeout, getMaxNickLength,
             getMinNickLength, getPasswordMinLen, getMovementRadius, getmaxRegPerIp, getNonActivatedGroup,
@@ -94,6 +94,8 @@ public final class Settings extends YamlConfiguration {
 public void loadConfigOptions() {
         plugin.getLogger().info("Loading Configuration File...");
         mergeConfig();
+        
+        // TODO: make autoloader for all config strings by adding them to list and iterating them
 
         messagesLanguage = checkLang(configFile.getString("settings.messagesLanguage","en"));
         isPermissionCheckEnabled = configFile.getBoolean("permission.EnablePermissionCheck", false);
@@ -241,6 +243,12 @@ public void loadConfigOptions() {
         spawnPriority = configFile.getString("settings.restrictions.spawnPriority", "authme,essentials,multiverse,default");
         getMaxLoginPerIp = configFile.getInt("settings.restrictions.maxLoginPerIp", 0);
         getMaxJoinPerIp = configFile.getInt("settings.restrictions.maxJoinPerIp", 0);
+        
+        //Mongo
+        
+        getMongoCollectionName = configFile.getString("DataSource.mongoCollectionName");
+        getMongoFieldName = configFile.getString("DataSource.mongoFieldName","username");
+        //Mongo
 
         // Load the welcome message
         getWelcomeMessage(plugin);
@@ -762,5 +770,12 @@ public void mergeConfig() {
 
     public enum messagesLang {
     	en, de, br, cz, pl, fr, uk, ru, hu, sk, es, fi, zhtw, zhhk, zhcn, lt, it, ko, pt, nl
+    }
+    
+    private <T> T getSettings(T field) {
+    	/*
+    	 * @author: Kalovdutii
+    	 */
+    	return null;
     }
 }
